@@ -169,6 +169,7 @@
                         message = opts.parse(msg);
                     } catch (err) {
                         send(new Error('Failed to parse message:' + err.message));
+                        return;
                     }
 
                     if (message.responseId) {
