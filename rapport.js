@@ -152,7 +152,7 @@
                     });
 
                 } else {
-                    throw new Error('No callback supplied and a Promise implementation could not be found');
+                    throw new Error('Can\t make a request without a Promise implementation or callback');
                 }
             }
 
@@ -168,7 +168,7 @@
                     try {
                         message = opts.parse(msg);
                     } catch (err) {
-                        send(new Error('Failed to parse message:' + err.message));
+                        send(err);
                         return;
                     }
 
