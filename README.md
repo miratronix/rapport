@@ -1,5 +1,5 @@
 # rapport
-rapport is a simple websocket wrapper that adds request/response functionality.
+A simple websocket wrapper that adds request/response functionality.
 
 ## Features
 * Callback and Promise support for requests.
@@ -14,7 +14,7 @@ Simply add `rapport.js` to your HTML page and start using it:
 
 ```javascript
 const Rapport = Rapport(Websocket);
-const ws = Rapport.create('ws:localhost');
+const ws = Rapport.create('ws:localhost', wsOptions);
 
 ws.onOpen(() => {
     
@@ -73,7 +73,7 @@ wrappedSocket.onMessage((msg) => {
 ### Creating a new client
 ```javascript
 const Rapport = require('rapport')(require('ws'));
-const ws = Rapport.create('ws:localhost');
+const ws = Rapport.create('ws:localhost', wsOptions);
 
 ws.onOpen(() => {    
     ws.request('some request', timeout)
