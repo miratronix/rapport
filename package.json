@@ -1,0 +1,27 @@
+{
+  "name": "rapport",
+  "version": "0.0.1",
+  "description": "Request/response wrapper for websockets",
+  "main": "rapport.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^3.14.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:miratronix/rapport.git"
+  },
+  "keywords": [
+    "ws",
+    "websocket",
+    "promise",
+    "request",
+    "rapport"
+  ],
+  "author": "miratronix",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miratronix/rapport/issues"
+  },
+  "homepage": "https://github.com/miratronix/rapport"
+}

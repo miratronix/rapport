@@ -1,0 +1,86 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        // 1. Objects
+        "no-new-object": 2,
+        "quote-props": [2, "as-needed"],
+
+        // 2. Arrays
+        "no-array-constructor": 2,
+
+        // 3. Strings
+        "quotes": [2, "single"],
+
+        // 4. Functions
+        "func-style": [2, "declaration", { "allowArrowFunctions": true }],
+        "no-loop-func": 2,
+        "prefer-rest-params": 2,
+        "no-param-reassign": 2,
+
+        // 6. Constructors
+        "no-useless-constructor": 2,
+
+        // 7. Iterators and Generators
+        "no-iterator": 2,
+
+        // 8. Properties
+        "dot-notation": [2, { "allowKeywords": true }],
+        "key-spacing": [2, { "beforeColon": false, "afterColon": true, "mode": "minimum" }],
+
+        // 9. Variables
+        "one-var": [2, "never"],
+        "prefer-const": 2,
+
+        // 10. Comparison Operators and Equality
+        "eqeqeq": 2,
+        "no-case-declarations": 2,
+        "no-nested-ternary": 2,
+        "no-unneeded-ternary": 2,
+
+        // 11. Blocks
+        "curly": ["error", "multi-line", "consistent"],
+        "brace-style": [2, "1tbs", { "allowSingleLine": false }],
+
+        // 12. Comments
+        // No rules to enforce.
+
+        // 13. Whitespace
+        "indent": [2, 4],
+        "space-before-blocks": [2, "always"],
+        "keyword-spacing": [2, { "before": true, "after": true }],
+        "space-infix-ops": 2,
+        "eol-last": 2,
+        //"newline-per-chained-call": [2, { "ignoreChainWithDepth": 2 }],
+        "no-whitespace-before-property": 2,
+        "space-in-parens": [2, "never"],
+        "array-bracket-spacing": [2, "never"],
+        "object-curly-spacing": [2, "always"],
+
+        // 14. Commas
+        "comma-style": [2, "last"],
+        "comma-dangle": [1, "only-multiline"],
+
+        // 15. Semicolons
+        "semi": [2, "always"],
+
+        // 16. Naming Conventions
+        "camelcase": [2, { "properties": "never" }],
+        //"new-cap": 1,
+
+        // 17. Accessors
+        // No rules to enforce.
+
+        // 18. jQuery
+        // No rules to enforce.
+
+        // Other
+        "strict": [2, "global"],
+        "linebreak-style": [2, "unix"],
+        "no-unused-vars": [2, { "vars": "all", "args": "none", "varsIgnorePattern": "logger|config|_" }]
+    }
+}
