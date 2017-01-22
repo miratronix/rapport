@@ -50,11 +50,11 @@ Install with `npm install --save rapport`.
 const Rapport = require('rapport')();
 const wrappedSocket = Rapport.wrap(existingSocket);
 
-ws.request('some request', timeout)
+wrappedSocket.request('some request', timeout)
     .then((response) => {})
     .catch((err) => {});
     
-ws.request('some request', timeout, (response, error) => {});
+wrappedSocket.request('some request', timeout, (response, error) => {});
 ```
 
 ### Responding to clients with an existing socket
