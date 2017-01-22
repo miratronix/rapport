@@ -7,6 +7,7 @@ rapport is a simple websocket wrapper that adds request/response functionality.
 * Super small (240 lines with comments)
 * Configurable promise implementation
 * Configurable serialization functions
+* Zero dependencies
 
 ## Browser Usage
 Simply add `rapport.js` to your HTML page and start using it:
@@ -30,14 +31,15 @@ ws.onOpen(() => {
 ws.onMessage((msg) => {
     if (msg.isRequest) {
         msg.respond('hello');
+        msg.respondWithError('Error!');
     }
 });
 
 // Other functions are also wrapped:
-ws.onError(...);
-ws.onClose(...);
-ws.send(...);
-ws.close(...);
+ws.onError((err) => {});
+ws.onClose(() => {});
+ws.send(msg);
+ws.close();
 ```
 
 ## Node.js Usage
@@ -63,6 +65,7 @@ const wrappedSocket = Rapport.wrap(existingSocket);
 wrappedSocket.onMessage((msg) => {
     if (msg.isRequest) {   
         msg.respond('Hello');
+        msg.respondWithError('Error!');
     }
 });
 ```
@@ -82,12 +85,33 @@ ws.onOpen(() => {
 ws.onMessage((msg) => {
     if (msg.isRequest) {
         msg.respond('hello');
+        msg.respondWithError('Error!');
     }
 });
 
 // Other functions are also wrapped:
-ws.onError(...);
-ws.onClose(...);
-ws.send(...);
-ws.close(...);
+ws.onError((err) => {});
+ws.onClose(() => {});
+ws.send(msg);
+ws.close();
+```
+
+## Configuration Options
+There are 4 configurable options for the Rapport library, with the following defaults:
+
+```javascript
+Rapport(Websocket, {
+    
+    // Set the function for stringifying messages
+    stringify: (msg) => { return JSON.stringify(msg); },
+    
+    // Set the function for parsing messages
+    parse: (msg) => { return JSON.parse(msg); },
+    
+    // Set the Promise implementation to use
+    Promise: Promise,
+    
+    // Set the request ID generation function
+    generateRequestId: () => { return uuid.v4(); }
+});
 ```
