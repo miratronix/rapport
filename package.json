@@ -4,7 +4,9 @@
   "description": "Request/response wrapper for websockets",
   "main": "rapport.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.14.0"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:miratronix/rapport.git"
