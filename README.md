@@ -1,11 +1,12 @@
 # rapport
-Rapport is a simple websocket wrapper that adds request/response functionality.
+rapport is a simple websocket wrapper that adds request/response functionality.
 
 ## Features
 * Callback and Promise support for requests.
 * Wraps node WS objects as well as the browser Websocket object.
 * Super small (240 lines with comments)
 * Configurable promise implementation
+* Configurable serialization functions
 
 ## Browser Usage
 Simply add `rapport.js` to your HTML page and start using it:
@@ -22,7 +23,7 @@ ws.onOpen(() => {
         .catch((err) => {});
     
     // If you prefer callbacks
-    ws.request('some request', timeout, (response, error) => {})
+    ws.request('some request', timeout, (response, error) => {});
 });
 
 // Replying to a request
@@ -40,7 +41,7 @@ ws.close(...);
 ```
 
 ## Node.js Usage
-Install with `npm install rapport`.
+Install with `npm install --save rapport`.
 
 ### Requesting from clients with an existing socket
 ```javascript
@@ -51,7 +52,7 @@ ws.request('some request', timeout)
     .then((response) => {})
     .catch((err) => {});
     
-ws.request('some request', timeout, (response, error) => {})
+ws.request('some request', timeout, (response, error) => {});
 ```
 
 ### Responding to clients with an existing socket
@@ -66,21 +67,15 @@ wrappedSocket.onMessage((msg) => {
 });
 ```
 
-## Creating a new client
+### Creating a new client
 ```javascript
-const Websocket = require('ws');
-const Rapport = require('rapport')(Websocket);
+const Rapport = require('rapport')(require('ws'));
 const ws = Rapport.create('ws:localhost');
 
-ws.onOpen(() => {
-    
-    // If the browser supports ES6 promises or a promise library is configured
+ws.onOpen(() => {    
     ws.request('some request', timeout)
         .then((response) => {})
         .catch((err) => {});
-    
-    // If you prefer callbacks
-    ws.request('some request', timeout, (response, error) => {})
 });
 
 // Replying to a request
