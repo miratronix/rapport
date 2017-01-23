@@ -2,9 +2,9 @@
 A simple websocket wrapper that adds request/response functionality.
 
 ## Features
-* Callback and Promise support for requests.
-* Wraps node WS objects as well as the browser Websocket object.
-* Super small (240 lines with comments)
+* Callback and Promise support for requests
+* Wraps node WS objects as well as the browser Websocket object
+* Super small (275 lines with comments)
 * Configurable promise implementation
 * Configurable serialization functions
 * Zero dependencies
@@ -37,9 +37,9 @@ ws.onMessage((msg) => {
 
 // Other functions are also wrapped:
 ws.onError((err) => {});
-ws.onClose(() => {});
+ws.onClose((code, msg) => {});
 ws.send(msg);
-ws.close();
+ws.close(closeMsg);
 ```
 
 ## Node.js Usage
@@ -91,9 +91,9 @@ ws.onMessage((msg) => {
 
 // Other functions are also wrapped:
 ws.onError((err) => {});
-ws.onClose(() => {});
+ws.onClose((code, msg) => {});
 ws.send(msg);
-ws.close();
+ws.close(closeMsg);
 ```
 
 ## Configuration Options

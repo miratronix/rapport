@@ -31,13 +31,14 @@
      * @return {Rapport} Rapport library.
      */
     function Rapport(wsImplementation, options) {
+        const userOptions = options || {};
         const opts = {
-            stringify: options.stringify || JSON.stringify,
-            parse: options.parse || JSON.parse,
-            Promise: options.Promise || (typeof Promise !== 'undefined') ? Promise : null,
-            generateRequestId: options.generateRequestId || function() {
+            stringify: userOptions.stringify || JSON.stringify,
+            parse: userOptions.parse || JSON.parse,
+            Promise: userOptions.Promise || (typeof Promise !== 'undefined') ? Promise : null,
+            generateRequestId: userOptions.generateRequestId || function() {
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-                    var d = Date.now().getTime();
+                    var d = Date.now();
                     var r = (d + Math.random() * 16) % 16 | 0;
                     return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
                 });
@@ -106,6 +107,13 @@
                 }
             }
 
+            function rejectRequestsWithClose(code, message) {
+                var requestId;
+                for (requestId in Object.keys(requests)) {
+                    completeRequest(requestId, null, new Error('Websocket has been closed: ' + code + ' - ' + message));
+                }
+            }
+
             /**
              * Sends a message on the socket.
              *
@@ -157,6 +165,26 @@
             }
 
             /**
+             * Closes the socket connection.
+             *
+             * @param {*} message The message to send with the close.
+             */
+            function close(message) {
+                var msg;
+
+                if (message) {
+                    if (typeof message === 'string') {
+                        msg = message;
+                    } else {
+                        msg = opts.stringify(message);
+                    }
+                }
+
+                rejectRequestsWithClose(1000, msg);
+                underlyingSocket.close(1000, msg);
+            }
+
+            /**
              * Attaches a message handler to the socket.
              *
              * @param {function} handler The handler.
@@ -204,21 +232,28 @@
              * @param {function} handler The handler.
              */
             function onClose(handler) {
-                underlyingSocket.onClose(function() {
-                    var requestId;
-                    for (requestId in Object.keys(requests)) {
-                        completeRequest(requestId, null, new Error('Websocket has been closed'));
+                underlyingSocket.onClose(function(code, msg) {
+                    var message;
+
+                    try {
+                        message = opts.parse(msg);
+                    } catch (err) {
+                        message = msg;
                     }
-                    handler();
+
+                    rejectRequestsWithClose(code, message);
+                    handler(code, message);
                 });
             }
+
+            onMessage(function(msg) {});
 
             return {
                 onOpen: underlyingSocket.onOpen,
                 onError: underlyingSocket.onError,
                 onClose: onClose,
                 onMessage: onMessage,
-                close: underlyingSocket.close,
+                close: close,
                 send: send,
                 request: request
             };
