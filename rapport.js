@@ -246,6 +246,8 @@
                 });
             }
 
+            onMessage(function() {});
+
             return {
                 onOpen: underlyingSocket.onOpen,
                 onError: underlyingSocket.onError,
