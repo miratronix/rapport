@@ -31,11 +31,12 @@
      * @return {Rapport} Rapport library.
      */
     function Rapport(wsImplementation, options) {
+        const userOptions = options || {};
         const opts = {
-            stringify: options.stringify || JSON.stringify,
-            parse: options.parse || JSON.parse,
-            Promise: options.Promise || (typeof Promise !== 'undefined') ? Promise : null,
-            generateRequestId: options.generateRequestId || function() {
+            stringify: userOptions.stringify || JSON.stringify,
+            parse: userOptions.parse || JSON.parse,
+            Promise: userOptions.Promise || (typeof Promise !== 'undefined') ? Promise : null,
+            generateRequestId: userOptions.generateRequestId || function() {
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
                     var d = Date.now().getTime();
                     var r = (d + Math.random() * 16) % 16 | 0;
