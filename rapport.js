@@ -106,6 +106,13 @@
                 }
             }
 
+            function rejectRequestsWithClose(code, message) {
+                var requestId;
+                for (requestId in Object.keys(requests)) {
+                    completeRequest(requestId, null, new Error('Websocket has been closed: ' + code + ' - ' + message));
+                }
+            }
+
             /**
              * Sends a message on the socket.
              *
@@ -157,6 +164,26 @@
             }
 
             /**
+             * Closes the socket connection.
+             *
+             * @param {*} message The message to send with the close.
+             */
+            function close(message) {
+                var msg;
+
+                if (message) {
+                    if (typeof message === 'string') {
+                        msg = message;
+                    } else {
+                        msg = opts.stringify(message);
+                    }
+                }
+
+                rejectRequestsWithClose(1000, msg);
+                underlyingSocket.close(1000, msg);
+            }
+
+            /**
              * Attaches a message handler to the socket.
              *
              * @param {function} handler The handler.
@@ -204,12 +231,17 @@
              * @param {function} handler The handler.
              */
             function onClose(handler) {
-                underlyingSocket.onClose(function() {
-                    var requestId;
-                    for (requestId in Object.keys(requests)) {
-                        completeRequest(requestId, null, new Error('Websocket has been closed'));
+                underlyingSocket.onClose(function(code, msg) {
+                    var message;
+
+                    try {
+                        message = opts.parse(msg);
+                    } catch (err) {
+                        message = msg;
                     }
-                    handler();
+
+                    rejectRequestsWithClose(code, message);
+                    handler(code, message);
                 });
             }
 
@@ -218,7 +250,7 @@
                 onError: underlyingSocket.onError,
                 onClose: onClose,
                 onMessage: onMessage,
-                close: underlyingSocket.close,
+                close: close,
                 send: send,
                 request: request
             };
