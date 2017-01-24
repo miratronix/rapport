@@ -46,21 +46,31 @@
         };
 
         function standardizeWebsocket(ws) {
-            if (ws.onopen) {
+            if (ws.on) {
                 return {
-                    onOpen: ws.onopen.bind(ws),
-                    onClose: ws.onclose.bind(ws),
-                    onError: ws.onerror.bind(ws),
-                    onMessage: ws.onmessage.bind(ws),
+                    onOpen: ws.on.bind(ws, 'open'),
+                    onClose: ws.on.bind(ws, 'close'),
+                    onError: ws.on.bind(ws, 'error'),
+                    onMessage: ws.on.bind(ws, 'message'),
                     send: ws.send.bind(ws),
                     close: ws.close.bind(ws)
                 };
             }
             return {
-                onOpen: ws.on.bind(ws, 'open'),
-                onClose: ws.on.bind(ws, 'close'),
-                onError: ws.on.bind(ws, 'error'),
-                onMessage: ws.on.bind(ws, 'message'),
+                onOpen: function onOpen(handler) {
+                    ws.onopen = handler;
+                },
+                onClose: function onClose(handler) {
+                    ws.onclose = handler;
+                },
+                onError: function onError(handler) {
+                    ws.onerror = handler;
+                },
+                onMessage: function onMessage(handler) {
+                    ws.onmessage = function onMessage(msg) {
+                        handler(msg.data);
+                    };
+                },
                 send: ws.send.bind(ws),
                 close: ws.close.bind(ws)
             };
