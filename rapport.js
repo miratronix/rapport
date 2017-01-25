@@ -46,12 +46,20 @@
         };
 
         function standardizeWebsocket(ws) {
+
+            // Helper function for event emitter based websockets that limits the handler count to 1
+            // This lets us add a default handler without doubling up on messages
+            function oneHandler(event, handler) {
+                ws.removeAllListeners(event);
+                ws.on(event, handler);
+            }
+
             if (ws.on) {
                 return {
-                    onOpen: ws.on.bind(ws, 'open'),
-                    onClose: ws.on.bind(ws, 'close'),
-                    onError: ws.on.bind(ws, 'error'),
-                    onMessage: ws.on.bind(ws, 'message'),
+                    onOpen: oneHandler.bind(null, 'open'),
+                    onClose: oneHandler.bind(null, 'close'),
+                    onError: oneHandler.bind(null, 'error'),
+                    onMessage: oneHandler.bind(null, 'message'),
                     send: ws.send.bind(ws),
                     close: ws.close.bind(ws)
                 };
