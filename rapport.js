@@ -257,6 +257,7 @@
             }
 
             onMessage(function(msg) {});
+            onClose(function(code, reason) {});
 
             return {
                 onOpen: underlyingSocket.onOpen,
