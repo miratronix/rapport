@@ -37,7 +37,7 @@ ws.onMessage((msg, ws) => {
 
 // Other functions are also wrapped:
 ws.onError((err) => {});
-ws.onClose((code, msg) => {});
+ws.onClose((msg, code) => {});
 ws.send(msg);
 ws.close(message, optionalWsCode);
 ```
@@ -91,7 +91,7 @@ ws.onMessage((msg, ws) => {
 
 // Other functions are also wrapped:
 ws.onError((err) => {});
-ws.onClose((code, msg) => {});
+ws.onClose((msg, code) => {});
 ws.send(msg);
 ws.close(message, optionalWsCode);
 ```
