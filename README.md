@@ -4,13 +4,13 @@ A simple websocket wrapper that adds request/response functionality.
 ## Features
 * Callback and Promise support for requests
 * Wraps node WS objects as well as the browser Websocket object
-* Super small (285 lines with comments)
+* Small footprint (5.5kb minified)
 * Configurable promise implementation
 * Configurable serialization functions
 * Zero dependencies
 
 ## Browser Usage
-Simply add `rapport.js` to your HTML page and start using it:
+Simply add `rapport.min.js` to your HTML page and start using it:
 
 ```javascript
 const Rapport = Rapport(Websocket);
@@ -28,18 +28,18 @@ ws.onOpen(() => {
 });
 
 // Replying to a request
-ws.onMessage((msg) => {
-    if (msg.isRequest) {
-        msg.respond('hello');
-        msg.respondWithError('Error!');
+ws.onMessage((msg, ws) => {
+    if (ws.shouldRespond) {
+        ws.respond('hello');
+        ws.respondWithError('Error!');
     }
 });
 
 // Other functions are also wrapped:
 ws.onError((err) => {});
-ws.onClose((code, msg) => {});
+ws.onClose((msg, code) => {});
 ws.send(msg);
-ws.close(closeMsg);
+ws.close(message, optionalWsCode);
 ```
 
 ## Node.js Usage
@@ -62,10 +62,10 @@ wrappedSocket.request('some request', timeout, (response, error) => {});
 const Rapport = require('rapport')();
 const wrappedSocket = Rapport.wrap(existingSocket);
 
-wrappedSocket.onMessage((msg) => {
-    if (msg.isRequest) {   
-        msg.respond('Hello');
-        msg.respondWithError('Error!');
+wrappedSocket.onMessage((msg, ws) => {
+    if (ws.shouldRespond) {   
+        ws.respond('Hello');
+        ws.respondWithError('Error!');
     }
 });
 ```
@@ -82,18 +82,18 @@ ws.onOpen(() => {
 });
 
 // Replying to a request
-ws.onMessage((msg) => {
-    if (msg.isRequest) {
-        msg.respond('hello');
-        msg.respondWithError('Error!');
+ws.onMessage((msg, ws) => {
+    if (ws.shouldRespond) {
+        ws.respond('hello');
+        ws.respondWithError('Error!');
     }
 });
 
 // Other functions are also wrapped:
 ws.onError((err) => {});
-ws.onClose((code, msg) => {});
+ws.onClose((msg, code) => {});
 ws.send(msg);
-ws.close(closeMsg);
+ws.close(message, optionalWsCode);
 ```
 
 ## Configuration Options

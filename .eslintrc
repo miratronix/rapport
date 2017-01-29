@@ -1,8 +1,8 @@
 {
     "env": {
-        "browser": true,
         "es6": true,
-        "node": true
+        "node": true,
+        "browser": true
     },
     "extends": "eslint:recommended",
     "rules": {
@@ -15,12 +15,21 @@
 
         // 3. Strings
         "quotes": [2, "single"],
+        "prefer-template": 2,
+        "template-curly-spacing": [2, "never"],
 
         // 4. Functions
         "func-style": [2, "declaration", { "allowArrowFunctions": true }],
         "no-loop-func": 2,
         "prefer-rest-params": 2,
         "no-param-reassign": 2,
+
+        // 5. Arrow Functions
+        "prefer-arrow-callback": 2,
+        "arrow-spacing": [2, { "before": true, "after": true }],
+        "arrow-parens": [2, "always"],
+        "arrow-body-style": [2, "always"],
+        "no-confusing-arrow": 2,
 
         // 6. Constructors
         "no-useless-constructor": 2,
@@ -33,6 +42,7 @@
         "key-spacing": [2, { "beforeColon": false, "afterColon": true, "mode": "minimum" }],
 
         // 9. Variables
+        "no-var": 2,
         "one-var": [2, "never"],
         "prefer-const": 2,
 
