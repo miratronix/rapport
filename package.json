@@ -4,7 +4,7 @@
   "description": "Request/response wrapper for websockets",
   "main": "lib/index.js",
   "scripts": {
-    "bundle": "node ./scripts/bundle.js",
+    "bundle": "node ./scripts/bundle.js && git add rapport.min.js",
     "bundle:reset": "git reset rapport.min.js"
   },
   "pre-commit": [
