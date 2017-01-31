@@ -29,7 +29,11 @@ ws.onOpen(() => {
 
 // Replying to a request
 ws.onMessage((msg, ws) => {
-    if (ws.shouldRespond) {
+    
+    // The message content is in the body
+    const content = msg.body;
+    
+    if (msg.isRequest) {
         ws.respond('hello');
         ws.respondWithError('Error!');
     }
@@ -63,7 +67,11 @@ const Rapport = require('rapport')();
 const wrappedSocket = Rapport.wrap(existingSocket);
 
 wrappedSocket.onMessage((msg, ws) => {
-    if (ws.shouldRespond) {   
+    
+    // The message content is in the body
+    const content = msg.body;
+    
+    if (msg.isRequest) {   
         ws.respond('Hello');
         ws.respondWithError('Error!');
     }
@@ -83,7 +91,11 @@ ws.onOpen(() => {
 
 // Replying to a request
 ws.onMessage((msg, ws) => {
-    if (ws.shouldRespond) {
+    
+    // The message content is in the body
+    const content = msg.body;
+    
+    if (msg.isRequest) {
         ws.respond('hello');
         ws.respondWithError('Error!');
     }
