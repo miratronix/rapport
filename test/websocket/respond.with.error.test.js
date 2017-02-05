@@ -6,7 +6,7 @@ const wrap = require('../../lib/websocket/index.js');
 const createOptions = require('../../lib/options.js');
 const createRequestCache = require('../../lib/request.cache.js');
 
-describe('Websocket send()', () => {
+describe('Websocket respondWithError()', () => {
 
     let options;
     let requestCache;
@@ -20,10 +20,12 @@ describe('Websocket send()', () => {
         wrappedSocket = wrap(standardize(mockSocket), requestCache, options);
     });
 
-    it('Stringifies the message before sending', () => {
-        const obj = { hello: 'world' };
-        wrappedSocket.send(obj);
+    it('Wraps the response and sends it', () => {
+        wrappedSocket.respondWithError('some ID', 'Some error');
         mockSocket.messagesSent.should.equal(1);
-        mockSocket.lastSentMessage.should.equal(options.stringify(obj));
+        const message = JSON.parse(mockSocket.lastSentMessage);
+
+        message.should.have.a.property('responseId').that.equals('some ID');
+        message.should.have.a.property('error').that.equals('Some error');
     });
 });

@@ -6,17 +6,17 @@ const wrap = require('../../lib/websocket/index.js');
 const createOptions = require('../../lib/options.js');
 const createRequestCache = require('../../lib/request.cache.js');
 
-describe('Websocket Request', () => {
+describe('Websocket request()', () => {
 
     let options;
+    let requestCache;
     let mockSocket;
     let wrappedSocket;
-    let requestCache;
 
     beforeEach(() => {
         options = createOptions();
-        mockSocket = util.mockNodeWebsocket();
         requestCache = createRequestCache();
+        mockSocket = util.mockNodeWebsocket();
         wrappedSocket = wrap(standardize(mockSocket), requestCache, options);
     });
 
