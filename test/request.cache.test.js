@@ -9,7 +9,7 @@ describe('Request Cache', () => {
         return new Promise((resolve) => {
             requestCache.addCallback('callback test', resolve);
             requestCache.resolve('callback test', 'resolved');
-        }).should.eventually.equal('resolved');
+        }).should.become('resolved');
     });
 
     it('Can reject a callback', () => {
@@ -18,20 +18,20 @@ describe('Request Cache', () => {
                 reject(err);
             });
             requestCache.reject('callback test', 'rejected');
-        }).should.be.rejected.and.eventually.equal('rejected');
+        }).should.be.rejectedWith('rejected');
     });
 
     it('Can resolve a promise', () => {
         const promise = new Promise(requestCache.addPromise.bind(null, 'promise test'));
         requestCache.resolve('promise test', 'resolved');
-        return promise.should.eventually.equal('resolved');
+        return promise.should.become('resolved');
     });
 
 
     it('Can reject a promise', () => {
         const promise = new Promise(requestCache.addPromise.bind(null, 'promise test'));
         requestCache.reject('promise test', 'rejected');
-        return promise.should.be.rejected.and.eventually.equal('rejected');
+        return promise.should.be.rejectedWith('rejected');
     });
 
     it('Can reject all entries', () => {
@@ -41,9 +41,9 @@ describe('Request Cache', () => {
         requestCache.rejectAll('all rejected');
 
         return Promise.all([
-            promiseOne.should.be.rejected.and.eventually.equal('all rejected'),
-            promiseTwo.should.be.rejected.and.eventually.equal('all rejected'),
-            promiseThree.should.be.rejected.and.eventually.equal('all rejected')
+            promiseOne.should.be.rejectedWith('all rejected'),
+            promiseTwo.should.be.rejectedWith('all rejected'),
+            promiseThree.should.be.rejectedWith('all rejected')
         ]);
     });
 });
