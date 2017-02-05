@@ -22,6 +22,7 @@
     "browserify": "^14.0.0",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
+    "coveralls": "^2.11.15",
     "duplexify": "^3.5.0",
     "eslint": "^3.14.0",
     "istanbul": "^0.4.5",
