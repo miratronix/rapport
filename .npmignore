@@ -1,4 +1,5 @@
 .eslintrc
 .idea
 scripts
+test
 rapport.min.js
