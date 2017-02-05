@@ -6,6 +6,10 @@ chai.should();
 
 const TestUtil = {
 
+    mockSocketConstructor: function mockSocketConstructor() {
+        return TestUtil.mockNodeWebsocket();
+    },
+
     mockNodeWebsocket: () => {
         const ws = {
             messagesSent: 0,
