@@ -1,7 +1,11 @@
+machine:
+  node:
+    version: 6.4.0
+
 test:
-    override:
-        - npm run test:cover
-    post:
-        - cp -R test_results/coverage $CIRCLE_ARTIFACTS
-        - mkdir $CIRCLE_TEST_REPORTS/junit
-        - cp test_results/test_results.xml $CIRCLE_TEST_REPORTS/junit
+  override:
+    - npm run test:cover
+  post:
+    - cp -R test_results/coverage $CIRCLE_ARTIFACTS
+    - mkdir $CIRCLE_TEST_REPORTS/junit
+    - cp test_results/test_results.xml $CIRCLE_TEST_REPORTS/junit
