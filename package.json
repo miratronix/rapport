@@ -13,9 +13,7 @@
   "post-commit": [
     "bundle:reset"
   ],
-  "dependencies": {
-    "path-to-regexp": "^1.7.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-preset-es2015": "^6.22.0",
     "babelify": "^7.3.0",
