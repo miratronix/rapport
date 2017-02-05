@@ -1,4 +1,6 @@
-# rapport
+# rapport [![CircleCI](https://circleci.com/gh/miratronix/rapport.svg?style=shield)](https://circleci.com/gh/miratronix/rapport)
+[![NPM](https://nodei.co/npm/rapport.png)](https://npmjs.org/package/rapport)
+
 A simple websocket wrapper that adds request/response functionality.
 
 ## Features
