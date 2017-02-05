@@ -1,10 +1,12 @@
-# rapport
+# rapport [![CircleCI](https://circleci.com/gh/miratronix/rapport.svg?style=shield)](https://circleci.com/gh/miratronix/rapport)
+[![NPM](https://nodei.co/npm/rapport.png)](https://npmjs.org/package/rapport)
+
 A simple websocket wrapper that adds request/response functionality.
 
 ## Features
 * Callback and Promise support for requests
 * Wraps node WS objects as well as the browser Websocket object
-* Small footprint (5.5kb minified)
+* Small footprint (6.9kb minified)
 * Configurable promise implementation
 * Configurable serialization functions
 * Zero dependencies
