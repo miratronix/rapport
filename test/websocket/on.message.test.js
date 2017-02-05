@@ -27,6 +27,19 @@ describe('Websocket onMessage()', () => {
         options.parse(mockSocket.lastSentMessage).should.have.a.property('name').that.equals('SyntaxError');
     });
 
+    it('Can handle string messages', () => {
+        return new Promise((resolve) => {
+            wrappedSocket.onMessage((msg, ws) => {
+                msg.isRequest.should.equal(false);
+                msg.should.have.a.property('body');
+                msg.body.should.equal('Hello world');
+                ws.should.deep.equal(wrappedSocket);
+                resolve();
+            });
+            mockSocket.fire('message', JSON.stringify('Hello world'));
+        });
+    });
+
     context('Handles regular messages', () => {
 
         it('Calls the specified handler', () => {

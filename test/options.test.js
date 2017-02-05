@@ -58,9 +58,9 @@ describe('Options', () => {
             createOptions().stringify(obj).should.equal(JSON.stringify(obj));
         });
 
-        it('Doesn\'t stringify a string', () => {
+        it('Stringifies a string', () => {
             const obj = 'hello';
-            createOptions().stringify(obj).should.equal(obj);
+            createOptions().stringify(obj).should.equal(`"${obj}"`);
         });
 
         it('Stringifies an error', () => {

@@ -30,14 +30,14 @@ describe('Websocket close()', () => {
         wrappedSocket.close();
         mockSocket.closed.should.equal(true);
         mockSocket.closeCode.should.equal(1000);
-        mockSocket.closeMessage.should.equal('Socket was closed');
+        mockSocket.closeMessage.should.equal('"Socket was closed"');
     });
 
     it('Closes the underlying socket with the specified code and message', () => {
         wrappedSocket.close('Closed', 200);
         mockSocket.closed.should.equal(true);
         mockSocket.closeCode.should.equal(200);
-        mockSocket.closeMessage.should.equal('Closed');
+        mockSocket.closeMessage.should.equal('"Closed"');
     });
 
     it('Stringifies the close message', () => {
