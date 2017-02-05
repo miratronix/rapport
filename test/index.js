@@ -9,7 +9,12 @@ const TestUtil = {
     mockNodeWebsocket: () => {
         const ws = {
             messagesSent: 0,
+            lastSentMessage: '',
+
             closed: false,
+            closeCode: 0,
+            closeMessage: '',
+
             handlers: {
                 message: [],
                 close: [],
@@ -23,12 +28,15 @@ const TestUtil = {
                 }
             },
 
-            send: () => {
+            send: (msg) => {
                 ws.messagesSent++;
+                ws.lastSentMessage = msg;
             },
 
-            close: () => {
+            close: (code, msg) => {
                 ws.closed = true;
+                ws.closeCode = code;
+                ws.closeMessage = msg;
             },
 
             on: (type, handler) => {

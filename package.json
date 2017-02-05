@@ -6,7 +6,7 @@
   "scripts": {
     "bundle": "node ./scripts/bundle.js && git add rapport.min.js",
     "bundle:reset": "git reset rapport.min.js",
-    "test": "mocha"
+    "test": "mocha --recursive"
   },
   "pre-commit": [
     "bundle"
