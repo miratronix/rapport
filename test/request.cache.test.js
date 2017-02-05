@@ -1,7 +1,7 @@
 'use strict';
 
 require('./index.js');
-const requestCache = require('../lib/request.cache.js');
+const requestCache = require('../lib/request.cache.js')();
 
 describe('Request Cache', () => {
 
