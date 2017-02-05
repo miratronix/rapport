@@ -40,7 +40,7 @@ describe('Websocket close()', () => {
         mockSocket.closeMessage.should.equal('Closed');
     });
 
-    it('stringifies the close message', () => {
+    it('Stringifies the close message', () => {
         const msg = { goodbye: 'world' };
         wrappedSocket.close(msg);
         mockSocket.closed.should.equal(true);
