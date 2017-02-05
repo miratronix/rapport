@@ -2,4 +2,6 @@
 .idea
 scripts
 test
+test_results
+circle.yml
 rapport.min.js
