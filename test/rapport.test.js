@@ -66,6 +66,14 @@ describe('Rapport', () => {
             const ws = Rapport.wrap(util.mockNodeWebsocket());
             ws.should.have.a.property('onMessage').that.is.a('function');
         });
+
+        it('Adds itself to the window if it\'s present', () => {
+            global.window = {};
+            delete require.cache[require.resolve('../lib/index.js')];
+            Rapport = require('../lib/index.js');
+            global.window.should.have.a.property('Rapport').that.is.a('function');
+            delete global.window;
+        });
     });
 
     context('Instance', () => {

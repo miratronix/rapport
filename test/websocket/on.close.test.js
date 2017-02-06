@@ -24,7 +24,7 @@ describe('Websocket onClose()', () => {
         wrappedSocket.onClose(() => {});
         const promise = new Promise(requestCache.addPromise.bind(null, 'promise test'));
         mockSocket.fire('close', 1000, 'test');
-        return promise.should.be.rejectedWith(Error, 'Websocket was closed: with code 1000 and message test');
+        return promise.should.be.rejectedWith(Error, 'Websocket was closed: with code 1000 and message "test"');
     });
 
     it('Calls the specified handler', () => {
