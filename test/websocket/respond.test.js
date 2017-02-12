@@ -28,4 +28,14 @@ describe('Websocket respond()', () => {
         message.should.have.a.property('responseId').that.equals('some ID');
         message.should.have.a.property('body').that.equals('Some response');
     });
+
+    it('Wraps an object response and sends it', () => {
+        wrappedSocket.respond('some ID', { message: 'Some response' });
+        mockSocket.messagesSent.should.equal(1);
+        const message = JSON.parse(mockSocket.lastSentMessage);
+
+        message.should.have.a.property('responseId').that.equals('some ID');
+        message.should.have.a.property('body');
+        message.body.should.have.a.property('message').that.equals('Some response');
+    });
 });
