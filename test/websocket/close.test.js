@@ -47,4 +47,12 @@ describe('Websocket close()', () => {
         mockSocket.closeCode.should.equal(1000);
         mockSocket.closeMessage.should.equal(JSON.stringify(msg));
     });
+
+    it('Stringifies a close Error', () => {
+        const msg = new Error('closed');
+        wrappedSocket.close(msg);
+        mockSocket.closed.should.equal(true);
+        mockSocket.closeCode.should.equal(1000);
+        JSON.parse(mockSocket.closeMessage).should.have.a.property('message').that.equals('closed');
+    });
 });
