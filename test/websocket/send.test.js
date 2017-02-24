@@ -20,10 +20,10 @@ describe('Websocket send()', () => {
         wrappedSocket = wrap(standardize(mockSocket), requestCache, options);
     });
 
-    it('Stringifies the message before sending', () => {
+    it('Encodes the message before sending', () => {
         const obj = { hello: 'world' };
         wrappedSocket.send(obj);
         mockSocket.messagesSent.should.equal(1);
-        mockSocket.lastSentMessage.should.equal(options.stringify(obj));
+        mockSocket.lastSentMessage.should.equal(options.encode(obj));
     });
 });

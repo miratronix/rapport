@@ -9,41 +9,41 @@ describe('Options', () => {
 
         it('Defaults to the standard options', () => {
             const options = createOptions();
-            options.should.have.a.property('parse').that.is.a('function');
-            options.should.have.a.property('stringify').that.is.a('function');
+            options.should.have.a.property('decode').that.is.a('function');
+            options.should.have.a.property('encode').that.is.a('function');
             options.should.have.a.property('Promise').that.is.a('function');
             options.should.have.a.property('generateRequestId').that.is.a('function');
         });
 
         it('Allows for additional options', () => {
             const options = createOptions({ something: 'yup' });
-            options.should.have.a.property('parse').that.is.a('function');
-            options.should.have.a.property('stringify').that.is.a('function');
+            options.should.have.a.property('decode').that.is.a('function');
+            options.should.have.a.property('encode').that.is.a('function');
             options.should.have.a.property('Promise').that.is.a('function');
             options.should.have.a.property('generateRequestId').that.is.a('function');
             options.should.have.a.property('something').that.equals('yup');
         });
 
         it('Can override default options', () => {
-            const options = createOptions({ parse: 1 });
-            options.should.have.a.property('parse').that.equals(1);
-            options.should.have.a.property('stringify').that.is.a('function');
+            const options = createOptions({ decode: 1 });
+            options.should.have.a.property('decode').that.equals(1);
+            options.should.have.a.property('encode').that.is.a('function');
             options.should.have.a.property('Promise').that.is.a('function');
             options.should.have.a.property('generateRequestId').that.is.a('function');
         });
 
         it('Can override options based on parameter location', () => {
-            const options = createOptions({ parse: 1 }, { parse: 2, stringify: 3 });
-            options.should.have.a.property('parse').that.equals(1);
-            options.should.have.a.property('stringify').that.equals(3);
+            const options = createOptions({ decode: 1 }, { decode: 2, encode: 3 });
+            options.should.have.a.property('decode').that.equals(1);
+            options.should.have.a.property('encode').that.equals(3);
             options.should.have.a.property('Promise').that.is.a('function');
             options.should.have.a.property('generateRequestId').that.is.a('function');
         });
 
         it('Can add additional options in additional parameters', () => {
             const options = createOptions({ something: 'yup' }, { stuff: 'yeah' });
-            options.should.have.a.property('parse').that.is.a('function');
-            options.should.have.a.property('stringify').that.is.a('function');
+            options.should.have.a.property('decode').that.is.a('function');
+            options.should.have.a.property('encode').that.is.a('function');
             options.should.have.a.property('Promise').that.is.a('function');
             options.should.have.a.property('generateRequestId').that.is.a('function');
             options.should.have.a.property('something').that.equals('yup');
@@ -51,21 +51,21 @@ describe('Options', () => {
         });
     });
 
-    context('Default stringify', () => {
+    context('Default encode', () => {
 
-        it('Can stringify a JS object', () => {
+        it('Can encode a JS object', () => {
             const obj = { hello: 'world' };
-            createOptions().stringify(obj).should.equal(JSON.stringify(obj));
+            createOptions().encode(obj).should.equal(JSON.stringify(obj));
         });
 
-        it('Stringifies a string', () => {
+        it('Encodes a string', () => {
             const obj = 'hello';
-            createOptions().stringify(obj).should.equal(`"${obj}"`);
+            createOptions().encode(obj).should.equal(`"${obj}"`);
         });
 
-        it('Stringifies an error', () => {
+        it('Encodes an error', () => {
             const obj = new Error('error');
-            createOptions().stringify(obj).should.equal(JSON.stringify({
+            createOptions().encode(obj).should.equal(JSON.stringify({
                 name: obj.name,
                 message: obj.message,
                 stack: obj.stack
@@ -73,21 +73,21 @@ describe('Options', () => {
         });
     });
 
-    context('Default parse', () => {
+    context('Default decode', () => {
 
-        it('Can parse a JSON string', () => {
+        it('Can decode a JSON string', () => {
             const obj = { hello: 'world' };
-            createOptions().parse(JSON.stringify(obj)).should.deep.equal(obj);
+            createOptions().decode(JSON.stringify(obj)).should.deep.equal(obj);
         });
 
-        it('Doesn\'t parse an object', () => {
+        it('Doesn\'t decode an object', () => {
             const obj = { hello: 'world' };
-            createOptions().parse(obj).should.deep.equal(obj);
+            createOptions().decode(obj).should.deep.equal(obj);
         });
 
-        it('Throws when invalid JSON is parsed', () => {
+        it('Throws when invalid JSON is decoded', () => {
             (() => {
-                createOptions().parse('hello');
+                createOptions().decode('hello');
             }).should.throw(SyntaxError);
         });
     });
