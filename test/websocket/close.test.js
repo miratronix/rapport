@@ -23,7 +23,7 @@ describe('Websocket close()', () => {
     it('Rejects all outstanding requests', () => {
         const promise = new Promise(requestCache.addPromise.bind(null, 'promise test'));
         wrappedSocket.close();
-        return promise.should.be.rejectedWith(Error, 'Websocket was closed: with code 1000 and message Socket was closed');
+        return promise.should.be.rejectedWith(Error, 'Websocket was closed locally with code: 1000 and message: Socket was closed');
     });
 
     it('Defaults the close code and message', () => {
@@ -40,7 +40,7 @@ describe('Websocket close()', () => {
         mockSocket.closeMessage.should.equal('"Closed"');
     });
 
-    it('Stringifies the close message', () => {
+    it('Encodes the close message', () => {
         const msg = { goodbye: 'world' };
         wrappedSocket.close(msg);
         mockSocket.closed.should.equal(true);
@@ -48,7 +48,7 @@ describe('Websocket close()', () => {
         mockSocket.closeMessage.should.equal(JSON.stringify(msg));
     });
 
-    it('Stringifies a close Error', () => {
+    it('Encodes a close Error', () => {
         const msg = new Error('closed');
         wrappedSocket.close(msg);
         mockSocket.closed.should.equal(true);
