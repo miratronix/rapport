@@ -6,7 +6,7 @@ A simple websocket wrapper that adds request/response functionality.
 ## Features
 * Callback and Promise support for requests
 * Wraps node WS objects as well as the browser Websocket object
-* Small footprint (7.1kb minified)
+* Small footprint (7.3kb minified)
 * Configurable promise implementation
 * Configurable serialization functions
 * Zero dependencies
