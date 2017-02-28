@@ -6,7 +6,7 @@ A simple websocket wrapper that adds request/response functionality.
 ## Features
 * Callback and Promise support for requests
 * Wraps node WS objects as well as the browser Websocket object
-* Small footprint (7.3kb minified)
+* Small footprint (7.4kb minified)
 * Configurable promise implementation
 * Configurable serialization functions
 * Zero dependencies
@@ -111,16 +111,22 @@ ws.close(optionalMessage, optionalWsCode);
 ```
 
 ## Configuration Options
-There are 4 configurable options for the Rapport library, with the following defaults:
+There are 6 configurable options for the Rapport library, with the following defaults:
 
 ```javascript
 Rapport(Websocket, {
     
     // Set the function for encoding messages
-    encode: (msg) => { return JSON.stringify(msg); },
+    encodeMessage: (msg) => { return JSON.stringify(msg); },
     
     // Set the function for decoding messages
-    decode: (msg) => { return JSON.parse(msg); },
+    decodeMessage: (msg) => { return JSON.parse(msg); },
+    
+    // Set the function for encoding close messages. This MUST return a string.
+    encodeCloseMessage: (msg) => { return JSON.stringify(msg); },
+    
+    // Set the function for decoding messages. This will always receive a string.
+    decodeCloseMessage: (msg) => { return JSON.parse(msg); },
     
     // Set the Promise implementation to use
     Promise: Promise,
