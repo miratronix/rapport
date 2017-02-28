@@ -24,7 +24,7 @@ describe('Websocket onMessage()', () => {
         wrappedSocket.onMessage(() => {});
         mockSocket.fire('message', 'broken message');
         mockSocket.messagesSent.should.equal(1);
-        options.decode(mockSocket.lastSentMessage).should.have.a.property('name').that.equals('SyntaxError');
+        options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('name').that.equals('SyntaxError');
     });
 
     it('Can handle string messages', () => {
@@ -111,8 +111,8 @@ describe('Websocket onMessage()', () => {
             return new Promise((resolve) => {
                 wrappedSocket.onMessage((msg, res) => {
                     res.respond('yup');
-                    options.decode(mockSocket.lastSentMessage).should.have.a.property('responseId').that.equals('hey');
-                    options.decode(mockSocket.lastSentMessage).should.have.a.property('body').that.equals('yup');
+                    options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('responseId').that.equals('hey');
+                    options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('body').that.equals('yup');
                     res.sent.should.equal(true);
                     mockSocket.messagesSent.should.equal(1);
                     resolve();
@@ -125,8 +125,8 @@ describe('Websocket onMessage()', () => {
             return new Promise((resolve) => {
                 wrappedSocket.onMessage((msg, res) => {
                     res.respondWithError('error');
-                    options.decode(mockSocket.lastSentMessage).should.have.a.property('responseId').that.equals('hey');
-                    options.decode(mockSocket.lastSentMessage).should.have.a.property('error').that.equals('error');
+                    options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('responseId').that.equals('hey');
+                    options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('error').that.equals('error');
                     res.sent.should.equal(true);
                     mockSocket.messagesSent.should.equal(1);
                     resolve();

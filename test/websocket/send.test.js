@@ -24,6 +24,6 @@ describe('Websocket send()', () => {
         const obj = { hello: 'world' };
         wrappedSocket.send(obj);
         mockSocket.messagesSent.should.equal(1);
-        mockSocket.lastSentMessage.should.equal(options.encode(obj));
+        mockSocket.lastSentMessage.should.equal(options.encodeMessage(obj));
     });
 });
