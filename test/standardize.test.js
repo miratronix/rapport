@@ -68,6 +68,10 @@ describe('Standardize', () => {
             standardSocket.close('error');
             mockSocket.closed.should.equal(true);
         });
+
+        it('Exposes the underlying socket object', () => {
+            standardSocket.should.have.a.property('socket').that.equals(mockSocket);
+        });
     });
 
     context('Can standardize a browser websocket', () => {
@@ -129,6 +133,14 @@ describe('Standardize', () => {
         it('Can be closed', () => {
             standardSocket.close('error');
             mockSocket.closed.should.equal(true);
+        });
+
+        it('Sets the binary type to arraybuffer', () => {
+            mockSocket.should.have.a.property('binaryType').that.equals('arraybuffer');
+        });
+
+        it('Exposes the underlying socket object', () => {
+            standardSocket.should.have.a.property('socket').that.equals(mockSocket);
         });
     });
 });
