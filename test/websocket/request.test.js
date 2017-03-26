@@ -43,7 +43,7 @@ describe('Websocket request()', () => {
         mockSocket.messagesSent.should.equal(1);
         const message = JSON.parse(mockSocket.lastSentMessage);
 
-        message.should.have.a.property('_req').that.is.a('string');
+        message.should.have.a.property('_rq').that.is.a('string');
         message.should.have.a.property('_b').that.equals('Some request');
     });
 

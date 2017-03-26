@@ -25,7 +25,7 @@ describe('Websocket respondWithError()', () => {
         mockSocket.messagesSent.should.equal(1);
         const message = JSON.parse(mockSocket.lastSentMessage);
 
-        message.should.have.a.property('_res').that.equals('some ID');
+        message.should.have.a.property('_rs').that.equals('some ID');
         message.should.have.a.property('_e').that.equals('Some error');
     });
 
@@ -34,7 +34,7 @@ describe('Websocket respondWithError()', () => {
         mockSocket.messagesSent.should.equal(1);
         const message = JSON.parse(mockSocket.lastSentMessage);
 
-        message.should.have.a.property('_res').that.equals('some ID');
+        message.should.have.a.property('_rs').that.equals('some ID');
         message.should.have.a.property('_e').that.is.an('object');
         message._e.should.have.a.property('message').that.equals('error');
     });
@@ -44,7 +44,7 @@ describe('Websocket respondWithError()', () => {
         mockSocket.messagesSent.should.equal(1);
         const message = JSON.parse(mockSocket.lastSentMessage);
 
-        message.should.have.a.property('_res').that.equals('some ID');
+        message.should.have.a.property('_rs').that.equals('some ID');
         message.should.have.a.property('_e').that.is.an('object');
         message._e.should.have.a.property('message').that.equals('error message');
     });

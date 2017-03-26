@@ -25,7 +25,7 @@ describe('Websocket respond()', () => {
         mockSocket.messagesSent.should.equal(1);
         const message = JSON.parse(mockSocket.lastSentMessage);
 
-        message.should.have.a.property('_res').that.equals('some ID');
+        message.should.have.a.property('_rs').that.equals('some ID');
         message.should.have.a.property('_b').that.equals('Some response');
     });
 
@@ -34,7 +34,7 @@ describe('Websocket respond()', () => {
         mockSocket.messagesSent.should.equal(1);
         const message = JSON.parse(mockSocket.lastSentMessage);
 
-        message.should.have.a.property('_res').that.equals('some ID');
+        message.should.have.a.property('_rs').that.equals('some ID');
         message.should.have.a.property('_b');
         message._b.should.have.a.property('message').that.equals('Some response');
     });

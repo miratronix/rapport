@@ -61,21 +61,21 @@ describe('Websocket onMessage()', () => {
         it('Resolves an outstanding request with a successful response', () => {
             wrappedSocket.onMessage(() => {});
             const promise = new Promise(requestCache.addPromise.bind(null, 'test id'));
-            mockSocket.fire('message', JSON.stringify({ _res: 'test id', _b: 'some response' }));
+            mockSocket.fire('message', JSON.stringify({ _rs: 'test id', _b: 'some response' }));
             return promise.should.become('some response');
         });
 
         it('Rejects an outstanding request with a failed response', () => {
             wrappedSocket.onMessage(() => {});
             const promise = new Promise(requestCache.addPromise.bind(null, 'test id'));
-            mockSocket.fire('message', JSON.stringify({ _res: 'test id', _e: 'some error' }));
+            mockSocket.fire('message', JSON.stringify({ _rs: 'test id', _e: 'some error' }));
             return promise.should.be.rejectedWith('some error');
         });
 
         it('Rejects an outstanding request with a broken response', () => {
             wrappedSocket.onMessage(() => {});
             const promise = new Promise(requestCache.addPromise.bind(null, 'test id'));
-            mockSocket.fire('message', JSON.stringify({ _res: 'test id' }));
+            mockSocket.fire('message', JSON.stringify({ _rs: 'test id' }));
             return promise.should.be.rejectedWith('Got a response object without a response or error property');
         });
     });
@@ -90,7 +90,7 @@ describe('Websocket onMessage()', () => {
                     msg.should.have.a.property('body').that.equals('yeah');
                     resolve();
                 });
-                mockSocket.fire('message', JSON.stringify({ _req: 'hey', _b: 'yeah' }));
+                mockSocket.fire('message', JSON.stringify({ _rq: 'hey', _b: 'yeah' }));
             });
         });
 
@@ -103,7 +103,7 @@ describe('Websocket onMessage()', () => {
                     res.should.have.a.property('respondWithError').that.is.a('function');
                     resolve();
                 });
-                mockSocket.fire('message', JSON.stringify({ _req: 'hey', _b: 'yeah' }));
+                mockSocket.fire('message', JSON.stringify({ _rq: 'hey', _b: 'yeah' }));
             });
         });
 
@@ -111,13 +111,13 @@ describe('Websocket onMessage()', () => {
             return new Promise((resolve) => {
                 wrappedSocket.onMessage((msg, res) => {
                     res.respond('yup');
-                    options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('_res').that.equals('hey');
+                    options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('_rs').that.equals('hey');
                     options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('_b').that.equals('yup');
                     res.sent.should.equal(true);
                     mockSocket.messagesSent.should.equal(1);
                     resolve();
                 });
-                mockSocket.fire('message', JSON.stringify({ _req: 'hey', _b: 'yeah' }));
+                mockSocket.fire('message', JSON.stringify({ _rq: 'hey', _b: 'yeah' }));
             });
         });
 
@@ -125,13 +125,13 @@ describe('Websocket onMessage()', () => {
             return new Promise((resolve) => {
                 wrappedSocket.onMessage((msg, res) => {
                     res.respondWithError('error');
-                    options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('_res').that.equals('hey');
+                    options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('_rs').that.equals('hey');
                     options.decodeMessage(mockSocket.lastSentMessage).should.have.a.property('_e').that.equals('error');
                     res.sent.should.equal(true);
                     mockSocket.messagesSent.should.equal(1);
                     resolve();
                 });
-                mockSocket.fire('message', JSON.stringify({ _req: 'hey', _b: 'yeah' }));
+                mockSocket.fire('message', JSON.stringify({ _rq: 'hey', _b: 'yeah' }));
             });
         });
     });
