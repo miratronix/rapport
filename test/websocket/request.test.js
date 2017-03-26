@@ -43,8 +43,8 @@ describe('Websocket request()', () => {
         mockSocket.messagesSent.should.equal(1);
         const message = JSON.parse(mockSocket.lastSentMessage);
 
-        message.should.have.a.property('requestId').that.is.a('string');
-        message.should.have.a.property('body').that.equals('Some request');
+        message.should.have.a.property('_req').that.is.a('string');
+        message.should.have.a.property('_b').that.equals('Some request');
     });
 
     it('Adds a timeout if one is specified', () => {
