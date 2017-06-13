@@ -128,7 +128,7 @@ Rapport(Websocket, {
     // Set the function for decoding messages. This will always receive a string.
     decodeCloseMessage: (msg) => { return JSON.parse(msg); },
     
-    // Set the Promise implementation to use
+    // Set the Promise implementation to use. Set to false to turn off promises.
     Promise: Promise,
     
     // Set the request ID generation function

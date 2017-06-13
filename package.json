@@ -1,6 +1,6 @@
 {
   "name": "rapport",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Request/response wrapper for websockets",
   "main": "lib/index.js",
   "scripts": {
