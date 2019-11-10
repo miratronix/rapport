@@ -52,6 +52,23 @@ describe('Websocket request()', () => {
             .should.be.rejectedWith(Error, 'Timed out after 10 ms');
     });
 
+    it('Rejects when a send error is encountered using a callback', () => {
+        const sendErrorSocket = { send: () => { throw new Error('Whoops') }, close: () => {}};
+        wrappedSocket = wrap(standardize(sendErrorSocket), requestCache, options);
+        return new Promise((resolve) => {
+            wrappedSocket.request('something', undefined, (res, err) => {
+                err.should.have.a.property('message').that.equals('Whoops');
+                resolve();
+            });
+        });
+    });
+
+    it('Rejects when a send error is encountered using a promise', () => {
+        const sendErrorSocket = { send: () => { throw new Error('Whoops') }, close: () => {}};
+        wrappedSocket = wrap(standardize(sendErrorSocket), requestCache, options);
+        return wrappedSocket.request('something').should.be.rejectedWith('Whoops')
+    });
+
     it('Throws an error if a callback is not supplied and there is no Promise object', () => {
         delete options.Promise;
         wrappedSocket = wrap(standardize(mockSocket), requestCache, options);
