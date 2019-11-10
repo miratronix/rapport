@@ -1,0 +1,48 @@
+version: 2.1
+
+jobs:
+  build:
+    working_directory: ~
+
+    # Use a basic node image
+    docker:
+      - image: circleci/node:10.16.3
+
+    steps:
+
+      # Checkout the source code
+      - checkout
+
+      # Update NPM
+      - run:
+          name: Update NPM
+          command: 'sudo npm install -g npm@latest'
+
+      # Restore the dependency cache
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+
+      # Install dependencies
+      - run:
+          name: NPM Install
+          command: npm install
+
+      # Save the dependency cache
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+
+      # Run tests with coverage
+      - run:
+          name: Run Tests
+          command: npm run test:cover
+
+      # Store the test results for inspection in CircleCI
+      - store_test_results:
+          path: test_results/test_results.xml
+
+      # Upload the coverage report to coveralls
+      - run:
+          name: Upload Coverage
+          command: cat test_results/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
