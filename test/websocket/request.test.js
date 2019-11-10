@@ -66,7 +66,7 @@ describe('Websocket request()', () => {
     it('Rejects when a send error is encountered using a promise', () => {
         const sendErrorSocket = { send: () => { throw new Error('Whoops') }, close: () => {}};
         wrappedSocket = wrap(standardize(sendErrorSocket), requestCache, options);
-        return wrappedSocket.request('something').should.be.rejectedWith('Whoops')
+        return wrappedSocket.request('something').should.be.rejectedWith('Whoops');
     });
 
     it('Throws an error if a callback is not supplied and there is no Promise object', () => {
