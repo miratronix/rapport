@@ -35,4 +35,8 @@ describe('Websocket Wrapper', () => {
         wrappedSocket.should.have.a.property('respond').that.is.a('function');
         wrappedSocket.should.have.a.property('respondWithError').that.is.a('function');
     });
+
+    it('Adds the raw socket', () => {
+        wrappedSocket.should.have.a.property('raw').that.is.a('object');
+    });
 });
