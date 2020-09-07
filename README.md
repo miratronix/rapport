@@ -41,11 +41,15 @@ ws.onMessage((msg, ws) => {
     }
 });
 
+// Closes are resolved when onClose is called, with an optional timeout
+ws.close(optionalMessage, optionalWsCode, optionalTimeout)
+    .then()
+    .catch();
+
 // Other functions are also wrapped:
 ws.onError((err) => {});
 ws.onClose((msg, code) => {});
 ws.send(message);
-ws.close(optionalMessage, optionalWsCode);
 ```
 
 ## Node.js Usage
@@ -103,11 +107,15 @@ ws.onMessage((msg, ws) => {
     }
 });
 
+// Closes are resolved when onClose is called, with an optional timeout
+ws.close(optionalMessage, optionalWsCode, optionalTimeout)
+    .then()
+    .catch();
+
 // Other functions are also wrapped:
 ws.onError((err) => {});
 ws.onClose((msg, code) => {});
 ws.send(message);
-ws.close(optionalMessage, optionalWsCode);
 ```
 
 ## Configuration Options

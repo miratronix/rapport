@@ -55,4 +55,33 @@ describe('Websocket close()', () => {
         mockSocket.closeCode.should.equal(1000);
         JSON.parse(mockSocket.closeMessage).should.have.a.property('message').that.equals('closed');
     });
+
+    it('Adds a promise to the request cache when no callback is supplied', () => {
+        const promise = wrappedSocket.close('Some message');
+        requestCache.requests.should.have.a.property('close');
+        promise.should.have.a.property('then').that.is.a('function');
+        requestCache.requests['close'].should.have.a.property('resolve').that.is.a('function');
+        requestCache.requests['close'].should.have.a.property('reject').that.is.a('function');
+    });
+
+    it('Adds a callback to the request cache when a callback is supplied', () => {
+        wrappedSocket.close('Some message', 1000, 0, () => {});
+        const key = Object.keys(requestCache.requests)[0];
+
+        Object.keys(requestCache.requests).length.should.equal(1);
+        requestCache.requests[key].should.have.a.property('cb').that.is.a('function');
+    });
+
+    it('Adds a timeout if one is specified', () => {
+        return wrappedSocket.close('Hello', 1006, 10)
+            .should.be.rejectedWith(Error, 'Timed out after 10 ms');
+    });
+
+    it('Throws an error if a callback is not supplied and there is no Promise object', () => {
+        delete options.Promise;
+        wrappedSocket = wrap(standardize(mockSocket), requestCache, options);
+        (() => {
+            wrappedSocket.close('something');
+        }).should.throw(Error, 'Can\'t close without a Promise implementation or callback');
+    });
 });

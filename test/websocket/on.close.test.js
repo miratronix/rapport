@@ -54,4 +54,11 @@ describe('Websocket onClose()', () => {
             mockSocket.fire('close', 1000, JSON.stringify({ goodbye: 'world' }));
         });
     });
+
+    it('Resolves a pending close operation', () => {
+        wrappedSocket.onClose(() => {});
+        const promise = new Promise(requestCache.addPromise.bind(null, 'close'));
+        mockSocket.fire('close');
+        return promise.should.become(undefined);
+    });
 });
