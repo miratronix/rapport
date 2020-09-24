@@ -117,6 +117,28 @@ describe('Standardize', () => {
             return closes.count.should.equal(1);
         });
 
+        it('Unwraps the event code and message', () => {
+            return new Promise((resolve) => {
+                standardSocket.onClose((code, msg) => {
+                    code.should.equal(1000);
+                    msg.should.equal('Goodbye');
+                    resolve();
+                });
+                mockSocket.fire('close', { code: 1000, reason: 'Goodbye'});
+            });
+        });
+
+        it('Defaults the code and message when no event is supplied', () => {
+            return new Promise((resolve) => {
+                standardSocket.onClose((code, msg) => {
+                    code.should.equal(1006);
+                    msg.should.equal('Socket was closed without a close event');
+                    resolve();
+                });
+                mockSocket.fire('close');
+            });
+        });
+
         it('Only allows for one error handler', () => {
             const errors = { count: 0 };
             standardSocket.onError(addTwo(errors));
